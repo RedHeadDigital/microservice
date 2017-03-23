@@ -2,6 +2,9 @@ var express = require('express'); // minimalist web framework
 var bodyParser = require('body-parser'); // body parsing middleware
 var mongoose = require('mongoose'); // mongoose
 
+// Generic custom functionality
+var health = require('./lib/health'); 
+
 var config = require('./config'); // service configuration
 
 // Define our app using express, allow it to use JSON
@@ -9,6 +12,11 @@ var config = require('./config'); // service configuration
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+// ---------------------------------------------------------
+
+// Configure the generic '/health' endpoint
+// ---------------------------------------------------------
+app.use('/health', health);
 // ---------------------------------------------------------
 
 // Connect to DB
