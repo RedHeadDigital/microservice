@@ -1,5 +1,6 @@
 var express = require('express'); // minimalist web framework
 var bodyParser = require('body-parser'); // body parsing middleware
+var mongoose = require('mongoose'); // mongoose
 
 var config = require('./config'); // service configuration
 
@@ -8,6 +9,19 @@ var config = require('./config'); // service configuration
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+// ---------------------------------------------------------
+
+// Connect to DB
+// ---------------------------------------------------------
+var connectWithRetry = function() {
+  return mongoose.connect(config.mongo.uri + '/' + config.service.name, function(err) {
+    if (err) {
+      console.error('Failed to connect to mongo on startup - retrying in 5 sec', err.message);
+      setTimeout(connectWithRetry, 5000);
+    }
+  });
+};
+connectWithRetry();
 // ---------------------------------------------------------
 
 // Start the server

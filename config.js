@@ -7,6 +7,10 @@ module.exports = {
 
     service: {
         "name": "micro-service-template",
+    },
+
+    mongo: {
+        uri: process.env.MONGO_HOST || "mongodb://localhost"
     }
 
 }
