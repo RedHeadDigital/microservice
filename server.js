@@ -42,6 +42,11 @@ var connectWithRetry = function () {
 connectWithRetry();
 // ---------------------------------------------------------
 
+// Register routes for this service
+// ---------------------------------------------------------
+app.use('/users', require('./src/routes/users')); // example route
+// ---------------------------------------------------------
+
 // Start the server
 // =========================================================
 var server = app.listen(process.env.PORT || config.port);
